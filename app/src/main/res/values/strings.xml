@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AssistedReminder</string>
+    <string name="hello_button">Have a button!</string>
+    <string name="hello_button_text">I\'M A BUTTON</string>
 </resources>
