@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">AssistedReminder</string>
     <string name="hello_button">Have a button!</string>
-    <string name="hello_button_text">I\'M A BUTTON</string>
+    <string name="hello_button_text">Time activity</string>
+    <string name="buttonToastText">Toast here!</string>
+    <string name="map_activity_title">Map Activity</string>
+    <string name="time_activity_title">Time activity</string>
 </resources>
