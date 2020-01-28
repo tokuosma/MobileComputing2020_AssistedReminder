@@ -2,7 +2,6 @@ package com.example.assistedreminder
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -26,10 +25,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        buttonToast.setOnClickListener{
-            Toast.makeText(applicationContext, "A Fine Toast!" , Toast.LENGTH_SHORT)
-                .show()
-        }
         floatingActionButton_TimeActivity.setOnClickListener{
             startActivity(Intent(applicationContext, TimeActivity::class.java))
         }
@@ -37,6 +32,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(applicationContext, MapActivity::class.java))
         }
 
+        val data = arrayOf("Moi", "Mai", "Möö")
+
+        val reminderAdapter= ReminderAdapter(applicationContext, data)
+        list.adapter = reminderAdapter
 
     }
 
