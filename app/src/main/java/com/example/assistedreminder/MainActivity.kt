@@ -1,11 +1,21 @@
 package com.example.assistedreminder
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var reminderViewModel: ReminderViewModel
+    private val newReminderActivityRequestCode = 1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,17 +36,37 @@ class MainActivity : AppCompatActivity() {
         }
 
         floatingActionButton_TimeActivity.setOnClickListener{
-            startActivity(Intent(applicationContext, TimeActivity::class.java))
+            startActivityForResult(Intent(applicationContext, TimeActivity::class.java), newReminderActivityRequestCode)
         }
         floatingActionButton_MapActivity.setOnClickListener{
             startActivity(Intent(applicationContext, MapActivity::class.java))
         }
 
-        val data = arrayOf("Moi", "Mai", "Möö")
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
+        val adapter = ReminderViewAdapter(this)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val reminderAdapter= ReminderAdapter(applicationContext, data)
-        list.adapter = reminderAdapter
 
+        reminderViewModel = ViewModelProviders.of(this).get(ReminderViewModel::class.java)
+        reminderViewModel.allReminders.observe(this, Observer{ reminders ->
+            reminders?.let{adapter.setReminders(it) }
+        })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == newReminderActivityRequestCode && resultCode == Activity.RESULT_OK){
+            data?.getParcelableExtra<Reminder>(TimeActivity.EXTRA_REPLY)?.let {
+                val reminder = it
+                reminderViewModel.insert(reminder)
+            }
+        } else{
+            Toast.makeText(applicationContext,
+                "Reminder was not added.",
+                Toast.LENGTH_LONG).show()
+        }
     }
 
 
