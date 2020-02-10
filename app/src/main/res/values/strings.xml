@@ -5,4 +5,5 @@
     <string name="buttonToastText">Toast here!</string>
     <string name="map_activity_title">Map Activity</string>
     <string name="time_activity_title">Time activity</string>
+    <string name="timeActivity_InvalidReminder">Please enter message and a valid time.</string>
 </resources>

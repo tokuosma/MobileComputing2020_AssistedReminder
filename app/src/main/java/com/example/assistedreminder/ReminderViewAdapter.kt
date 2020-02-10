@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ReminderViewAdapter internal constructor(
@@ -30,9 +31,12 @@ class ReminderViewAdapter internal constructor(
         val current = reminders[position]
 
 
-        holder.timeView.text =
-            if (current.time == null) Date(current.time).toString()
-            else "-"
+        if(current.time != null){
+            val time = current.time
+            val sdf = SimpleDateFormat( "HH:mm dd.MM.yyyy")
+            sdf.timeZone = TimeZone.getDefault()
+            holder.timeView.text = sdf.format(time)
+        }
 
         holder.messageView.text = current.message
     }

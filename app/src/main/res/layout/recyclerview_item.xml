@@ -3,15 +3,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/timeView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+    <View
+        android:id="@+id/divider_top"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
 
-            <TextView
-                android:id="@+id/messageView"
-                style="@style/reminder_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/background_light"/>
+    <TextView
+        android:id="@+id/timeView"
+        style="@style/reminder_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/messageView"
+        style="@style/reminder_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:id="@+id/divider_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
 </LinearLayout>
