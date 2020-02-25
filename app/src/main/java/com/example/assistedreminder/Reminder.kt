@@ -6,16 +6,18 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Entity(tableName = "reminders")
-data class Reminder (
-    @PrimaryKey(autoGenerate = true) var uid:Int?,
-    @ColumnInfo(name="time") var time : Long?,
-    @ColumnInfo(name="location")var location: String?,
-    @ColumnInfo(name="message") var message: String
+data class Reminder(
+    @PrimaryKey(autoGenerate = true) var uid: Int?,
+    @ColumnInfo(name = "time") var time: Long?,
+    @ColumnInfo(name = "location") var location: String?,
+    @ColumnInfo(name = "address") var address: String?, // Added in 1.1
+    @ColumnInfo(name = "message") var message: String
 
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Long::class.java.classLoader) as? Long,
+        parcel.readString(),
         parcel.readString(),
         parcel.readString().toString()
     )
@@ -24,6 +26,7 @@ data class Reminder (
         parcel.writeValue(uid)
         parcel.writeValue(time)
         parcel.writeString(location)
+        parcel.writeString(address)
         parcel.writeString(message)
     }
 
@@ -43,8 +46,9 @@ data class Reminder (
 }
 
 @Dao
-interface ReminderDao{
-    @Transaction @Insert
+interface ReminderDao {
+    @Transaction
+    @Insert
     suspend fun insert(reminder: Reminder)
 
     @Query("SELECT * FROM reminders ORDER BY time ASC")
@@ -52,6 +56,13 @@ interface ReminderDao{
 
     @Query("DELETE  FROM reminders")
     suspend fun deleteAll()
+
+    @Transaction
+    @Delete
+    suspend fun delete(reminder:Reminder)
+
+    @Delete
+    fun deleteSync(reminder:Reminder)
 
 }
 
