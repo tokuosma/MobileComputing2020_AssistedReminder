@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
     private fun setAlarm(reminder:Reminder) {
         val intent = Intent(this, ReminderReceiver::class.java)
         intent.putExtra(EXTRA_ALARM_MESSAGE, reminder.message)
-        intent.putExtra(EXTRA_REMINDER, reminder)
+//        intent.putExtra(EXTRA_REMINDER, reminder)
         val pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_ONE_SHOT)
         val manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         reminder.time?.let { manager.setExact(AlarmManager.RTC, it, pendingIntent) }
